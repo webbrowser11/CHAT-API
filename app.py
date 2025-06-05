@@ -1,8 +1,10 @@
 import json
 import time
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # 💡 CORS must go after app is created
 
 # In-memory message store, keyed by message id (auto increment)
 messages_store = {
@@ -42,7 +44,6 @@ def post_message():
     except Exception:
         return jsonify({"error": "Invalid JSON"}), 400
 
-    # Accept either a single message or a list of messages
     if isinstance(new_message, list):
         messages_to_add = new_message
     else:
@@ -55,7 +56,6 @@ def post_message():
 
         messages_store["last_id"] += 1
         msg_id = messages_store["last_id"]
-        # Use current time if timestamp not provided
         timestamp = msg.get("timestamp", int(time.time()))
         message_obj = {
             "id": msg_id,
