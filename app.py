@@ -4,8 +4,8 @@ import requests
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-UPSTASH_REST_URL = 'https://working-rabbit-37473.upstash.io'
-UPSTASH_REST_TOKEN = ''
+UPSTASH_REDIS_URL = os.getenv("UPSTASH_REDIS_URL")
+UPSTASH_REDIS_TOKEN = os.getenv("UPSTASH_REDIS_TOKEN")
 
 app = Flask(__name__)
 CORS(app)
